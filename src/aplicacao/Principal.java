@@ -1,8 +1,10 @@
 package aplicacao;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,18 +36,20 @@ public class Principal {
 				listaProduto.add(produto);
 			} while (br.ready());
 			
-			//for abaixo para teste apenas.
-			for (Produto cd: listaProduto) {
-				System.out.println("Nome: " + cd.getNome());
-				System.out.println("Quantidade: " + cd.getQuantidade());
-				System.out.println("Preço: " + cd.getValor());
-				System.out.println("-----------------------------");
-				System.out.println();
-			}
-			
 		}
 		catch (IOException e) {
 			System.out.println("Erro: " + e.getMessage());
+		}
+		finally {
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoArquivo + "\\out\\summary.csv"))) {
+				for (Produto cd : listaProduto) {
+					bw.write(cd.toString());
+					bw.newLine();
+				}
+			}
+			catch (IOException e){
+				System.out.println("Erro: " + e.getMessage());
+			}
 		}
 	}
 }

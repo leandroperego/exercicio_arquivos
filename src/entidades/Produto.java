@@ -42,4 +42,9 @@ public class Produto {
 	public Double valorTotal() {
 		return this.valor * this.quantidade;
 	}
+	
+	@Override
+	public String toString() {
+		return this.nome + "," + this.valorTotal();
+	}
 }
